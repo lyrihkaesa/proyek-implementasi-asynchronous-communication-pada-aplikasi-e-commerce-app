@@ -1,0 +1,54 @@
+# auto generate by helm repo add bitnami https://charts.bitnami.com/bitnami
+# helm install rabbit --set service.type=NodePort bitnami/rabbitmq --namespace ecommerce
+# kubectl get service/rabbit-rabbitmq-headless -o yaml -n ecommerce
+
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: rabbit
+    meta.helm.sh/release-namespace: ecommerce
+  creationTimestamp: '2024-03-13T19:42:45Z'
+  labels:
+    app.kubernetes.io/instance: rabbit
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/version: 3.12.13
+    helm.sh/chart: rabbitmq-12.15.0
+  name: rabbit-rabbitmq-headless
+  namespace: ecommerce
+  resourceVersion: '779'
+  uid: b8f92d64-e8cd-47b6-9ea5-d647700b3f98
+spec:
+  clusterIP: None
+  clusterIPs:
+    - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: epmd
+      port: 4369
+      protocol: TCP
+      targetPort: epmd
+    - name: amqp
+      port: 5672
+      protocol: TCP
+      targetPort: amqp
+    - name: dist
+      port: 25672
+      protocol: TCP
+      targetPort: dist
+    - name: http-stats
+      port: 15672
+      protocol: TCP
+      targetPort: stats
+  publishNotReadyAddresses: true
+  selector:
+    app.kubernetes.io/instance: rabbit
+    app.kubernetes.io/name: rabbitmq
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,58 @@
+# auto generate by helm repo add bitnami https://charts.bitnami.com/bitnami
+# helm install rabbit --set service.type=NodePort bitnami/rabbitmq --namespace ecommerce
+# kubectl get service/rabbit-rabbitmq -o yaml -n ecommerce
+
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: rabbit
+    meta.helm.sh/release-namespace: ecommerce
+  creationTimestamp: '2024-03-13T19:42:45Z'
+  labels:
+    app.kubernetes.io/instance: rabbit
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: rabbitmq
+    app.kubernetes.io/version: 3.12.13
+    helm.sh/chart: rabbitmq-12.15.0
+  name: rabbit-rabbitmq
+  namespace: ecommerce
+  resourceVersion: '788'
+  uid: 96f3dc8f-57db-485f-80be-dc613832194b
+spec:
+  clusterIP: 10.96.91.221
+  clusterIPs:
+    - 10.96.91.221
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: amqp
+      nodePort: 30107
+      port: 5672
+      protocol: TCP
+      targetPort: amqp
+    - name: epmd
+      nodePort: 30926
+      port: 4369
+      protocol: TCP
+      targetPort: epmd
+    - name: dist
+      nodePort: 31845
+      port: 25672
+      protocol: TCP
+      targetPort: dist
+    - name: http-stats
+      nodePort: 31861
+      port: 15672
+      protocol: TCP
+      targetPort: stats
+  selector:
+    app.kubernetes.io/instance: rabbit
+    app.kubernetes.io/name: rabbitmq
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

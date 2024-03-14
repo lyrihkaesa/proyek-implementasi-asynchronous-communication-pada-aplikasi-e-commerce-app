@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3 # Menggunakan versi API Istio
+kind: Gateway # Menentukan jenis objek, dalam hal ini Gateway
+metadata:
+  name: ecommerce-gateway # Nama dari Gateway
+spec:
+  selector:
+    istio: ingressgateway # Selector untuk menentukan gateway Ingress Istio yang akan digunakan
+  servers: # Konfigurasi server untuk gateway
+    - port:
+        number: 80 # Nomor port yang digunakan
+        protocol: HTTP # Protokol yang digunakan
+      hosts:
+        - '*' # Host yang diterima oleh gateway (all)
+---
+apiVersion: networking.istio.io/v1alpha3 # Menggunakan versi API Istio
+kind: VirtualService # Menentukan jenis objek, dalam hal ini VirtualService
+metadata:
+  name: order # Nama dari VirtualService
+spec:
+  hosts:
+    - '*' # Host yang diterima oleh VirtualService (all)
+  gateways:
+    - ecommerce-gateway # Gateway yang akan digunakan oleh VirtualService
+  http:
+    # Kondisi pencocokan HTTP
+    - match:
+        - uri:
+            exact: /order # URI yang cocok
+      route: # redirect
+        - destination:
+            host: order # Host dari order ServiceAccount
+            port:
+              number: 3000 # Port tujuan dari order service

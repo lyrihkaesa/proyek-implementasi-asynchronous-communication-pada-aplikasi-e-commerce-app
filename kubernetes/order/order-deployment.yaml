@@ -1,0 +1,29 @@
+apiVersion: apps/v1 # Versi API Kubernetes yang digunakan
+kind: Deployment # Jenis objek Kubernetes yang akan dibuat (Deployment)
+metadata:
+  name: order # Nama untuk Deployment yang akan dibuat
+  labels:
+    app: order # Label yang diterapkan pada Deployment untuk identifikasi
+spec:
+  replicas: 1 # Jumlah replika yang akan dibuat
+  selector:
+    matchLabels:
+      app: order # Selektor yang akan digunakan untuk memilih pod yang akan dimanage oleh Deployment
+  template:
+    metadata:
+      labels:
+        app: order # Label yang diterapkan pada pod yang dibuat oleh Deployment
+    spec:
+      serviceAccountName: order # Nama akun layanan yang akan digunakan oleh pod
+      containers:
+        - name: order # Nama dari container dalam pod
+          image: ghcr.io/lyrihkaesa/order:latest # Image Docker yang akan digunakan
+          ports:
+            - containerPort: 3000 # Port yang akan di-expose oleh container dalam pod
+          env:
+            # Port yang di-expose order app
+            - name: PORT
+              value: '3000'
+            # URL RabbitMQ user:<password dari perintah echo $(kubectl get secret --namespace ecommerce rabbit-rabbitmq -o jsonpath="{.data.rabbitmq-password}" | base64 -d)>@nama-service-rabbit-mq:port yang diekspose oleh service rabbitmq
+            - name: AMQP_URL
+              value: amqp://user:fqYKjBN0xsLj0kwE@rabbit-rabbitmq:5672

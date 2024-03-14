@@ -1,0 +1,36 @@
+# auto generate by helm repo add bitnami https://charts.bitnami.com/bitnami
+# helm install rabbit --set service.type=NodePort bitnami/rabbitmq --namespace ecommerce
+# kubectl get pv pvc-c62a1953-f65c-4c17-9f55-e18d2411057c -o yaml -n ecommerce
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    hostPathProvisionerIdentity: f9d47aba-6b31-481c-985e-96e876c9d39e
+    pv.kubernetes.io/provisioned-by: k8s.io/minikube-hostpath
+  creationTimestamp: '2024-03-13T19:42:45Z'
+  finalizers:
+    - kubernetes.io/pv-protection
+  name: pvc-c62a1953-f65c-4c17-9f55-e18d2411057c
+  resourceVersion: '800'
+  uid: 611e72c5-e8b8-450f-a23f-a1f7d15dbb7b
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 8Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: data-rabbit-rabbitmq-0
+    namespace: ecommerce
+    resourceVersion: '796'
+    uid: c62a1953-f65c-4c17-9f55-e18d2411057c
+  hostPath:
+    path: /tmp/hostpath-provisioner/ecommerce/data-rabbit-rabbitmq-0
+    type: ''
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: standard
+  volumeMode: Filesystem
+status:
+  phase: Bound

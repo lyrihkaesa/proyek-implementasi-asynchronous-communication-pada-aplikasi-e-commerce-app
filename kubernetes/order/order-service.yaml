@@ -1,0 +1,16 @@
+apiVersion: v1 # Versi API Kubernetes yang digunakan
+kind: Service # Jenis objek Kubernetes yang akan dibuat (Service)
+metadata:
+  name: order # Nama untuk Service yang akan dibuat
+spec:
+  ports:
+    - port: 3000 # Port yang akan di-expose oleh Service
+  selector:
+    app: order # Selektor yang digunakan untuk memilih pod yang akan di-routing trafik oleh Service
+---
+apiVersion: v1 # Versi API Kubernetes yang digunakan
+kind: ServiceAccount # Jenis objek Kubernetes yang akan dibuat (ServiceAccount)
+metadata:
+  name: order # Nama untuk ServiceAccount yang akan dibuat
+  labels:
+    account: order # Label yang diterapkan pada ServiceAccount untuk identifikasi
