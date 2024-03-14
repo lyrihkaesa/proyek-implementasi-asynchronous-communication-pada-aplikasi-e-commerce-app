@@ -1,0 +1,8 @@
+[submodule "order-service"]
+	path = order-service
+	url = https://github.com/lyrihkaesa/a433-microservices.git
+	branch = order-service
+[submodule "shipping-service"]
+	path = shipping-service
+	url = https://github.com/lyrihkaesa/a433-microservices.git
+	branch = shipping-service
